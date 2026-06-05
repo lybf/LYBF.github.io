@@ -1,0 +1,151 @@
+<script setup lang="ts">
+//components
+import "mdui/components/button-icon.js";
+
+import Footer from "./components/Footer.vue";
+
+//icons
+import "@mdui/icons/language.js";
+import "@mdui/icons/menu.js";
+import "@mdui/icons/light-mode.js";
+import "@mdui/icons/dark-mode.js";
+import "@mdui/icons/check.js";
+import "@mdui/icons/person.js";
+import "@mdui/icons/more-vert.js";
+import "@mdui/icons/link.js";
+//import mdui
+import { setTheme, getTheme } from "mdui";
+
+//import vue
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+//@ts-ignore
+let menuBtnState = ref(false);
+
+let setTheme0 = (theme: string) => {
+  setTheme(theme as "light" | "dark");
+  currentTheme.value = theme as "light" | "dark";
+};
+
+let currentTheme = ref(getTheme());
+
+const { locale } = useI18n();
+
+const changeLocale = (newLocale: string) => {
+  localStorage.setItem("locale", newLocale);
+  locale.value = newLocale;
+};
+</script>
+
+<style lang="css" scoped>
+mdui-tabs {
+  height: 2.5rem;
+}
+
+mdui-dropdown mdui-button {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+mdui-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-layout-main {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-layout-main > :first-child {
+  flex: 1;
+}
+
+.app-top-app-bar {
+  z-index: 9999;
+}
+
+.app-top-app-bar mdui-tabs {
+  background: inherit;
+}
+
+.app-top-app-bar mdui-tabs::part(tabs) {
+  background: inherit;
+}
+
+.app-top-app-bar mdui-tabs mdui-tab {
+  background: inherit;
+}
+
+.app-top-app-bar mdui-tabs mdui-tab::part(container) {
+  background: inherit;
+}
+
+mdui-tabs mdui-tab::part(container) {
+  background: transparent;
+}
+</style>
+
+<template>
+  <mdui-layout class="mdui-layout">
+    <mdui-top-app-bar
+      class="app-top-app-bar"
+      scroll-behavior="elevate"
+      scroll-target=".app-layout-main"
+    >
+      <mdui-top-app-bar-title class="app-top-app-bar-title">LYBF</mdui-top-app-bar-title>
+      <!-- tabs -->
+      <mdui-tabs value="home">
+        <mdui-tab value="home">
+          <RouterLink to="/">{{ $t("message.home") }}</RouterLink>
+        </mdui-tab>
+        <mdui-tab value="blogs">
+          <RouterLink to="/blogs">{{ $t("message.blogs") }}</RouterLink>
+        </mdui-tab>
+        <mdui-tab value="about">
+          <RouterLink to="/about">{{ $t("message.about") }}</RouterLink>
+        </mdui-tab>
+      </mdui-tabs>
+
+      <mdui-dropdown>
+        <mdui-button slot="trigger" variant="standard">
+          <mdui-icon-language></mdui-icon-language>
+        </mdui-button>
+
+        <mdui-menu selects="single" value="zh">
+          <mdui-menu-item @click="changeLocale('zh')" value="zh">
+            <mdui-icon-language></mdui-icon-language>
+            中文
+          </mdui-menu-item>
+          <mdui-menu-item @click="changeLocale('en')" value="en">
+            <mdui-icon-language></mdui-icon-language>
+            English
+          </mdui-menu-item>
+        </mdui-menu>
+      </mdui-dropdown>
+
+      <mdui-dropdown>
+        <mdui-button slot="trigger" variant="standard">
+          <mdui-icon-light-mode v-if="currentTheme == 'light'"></mdui-icon-light-mode>
+          <mdui-icon-dark-mode v-else></mdui-icon-dark-mode>
+        </mdui-button>
+
+        <mdui-menu selects="single" value="light">
+          <mdui-menu-item @click="setTheme0('light')" value="light">
+            <mdui-icon-light-mode></mdui-icon-light-mode>
+          </mdui-menu-item>
+          <mdui-menu-item @click="setTheme0('dark')" value="dark">
+            <mdui-icon-dark-mode></mdui-icon-dark-mode>
+          </mdui-menu-item>
+        </mdui-menu>
+      </mdui-dropdown>
+    </mdui-top-app-bar>
+    <mdui-layout-main class="app-layout-main">
+      <router-view></router-view>
+      <Footer></Footer>
+    </mdui-layout-main>
+  </mdui-layout>
+</template>

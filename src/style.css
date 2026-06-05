@@ -1,0 +1,42 @@
+html,body{
+  margin: 0;
+  padding: 0;
+}
+.menu-button{
+  transition: transform 0.3s ease;
+}
+.menu-button-active{
+  transition: transform 0.3s ease;
+  transform: rotate(90deg);
+}
+#app{
+  height: 100vh;
+  width: 100vw;
+}
+
+.mdui-layout{
+  height: 100vh;
+  width: 100vw;
+}
+
+.navigation-drawer{
+  height: 100vh;
+}
+.app-top-app-bar{
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: space-between;
+}
+.app-top-app-bar-title{
+}
+
+.app-nav-mdui-list{
+  margin-top: 16px;
+  margin-left: 10px;
+}
+
+a{
+  color: inherit;
+  text-decoration: none;
+}
