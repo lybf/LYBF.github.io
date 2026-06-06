@@ -28,13 +28,12 @@ export default {
 
 <style lang="css" scoped>
 .footer {
-  padding-top: 8px;
   width: 100%;
 }
 
 .footer mdui-card {
   width: 100%;
-  padding: 8px;
+  padding: 16px;
 }
 
 .footer-copyright {

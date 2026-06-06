@@ -19,7 +19,9 @@ import { setTheme, getTheme } from "mdui";
 //import vue
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router"
 
+const route = useRoute();
 //@ts-ignore
 let menuBtnState = ref(false);
 
@@ -39,10 +41,6 @@ const changeLocale = (newLocale: string) => {
 </script>
 
 <style lang="css" scoped>
-mdui-tabs {
-  height: 2.5rem;
-}
-
 mdui-dropdown mdui-button {
   width: 2.5rem;
   height: 2.5rem;
@@ -60,7 +58,7 @@ mdui-menu-item {
   flex-direction: column;
 }
 
-.app-layout-main > :first-child {
+.app-layout-main> :first-child {
   flex: 1;
 }
 
@@ -68,47 +66,52 @@ mdui-menu-item {
   z-index: 9999;
 }
 
-.app-top-app-bar mdui-tabs {
-  background: inherit;
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.app-top-app-bar mdui-tabs::part(tabs) {
-  background: inherit;
+.nav-links a {
+  text-decoration: none;
+  padding: 0.375rem 0.5rem;
+  color: inherit;
+  position: relative;
+  display: inline-block;
 }
 
-.app-top-app-bar mdui-tabs mdui-tab {
-  background: inherit;
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0.5rem;
+  right: 0.5rem;
+  height: 2px;
+  background-color: rgb(var(--mdui-color-primary));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-.app-top-app-bar mdui-tabs mdui-tab::part(container) {
-  background: inherit;
+.nav-links a:hover::after {
+  transform: scaleX(1);
 }
 
-mdui-tabs mdui-tab::part(container) {
-  background: transparent;
+.nav-links a.link-active::after {
+  transform: scaleX(1);
 }
 </style>
 
 <template>
   <mdui-layout class="mdui-layout">
-    <mdui-top-app-bar
-      class="app-top-app-bar"
-      scroll-behavior="elevate"
-      scroll-target=".app-layout-main"
-    >
+    <mdui-top-app-bar class="app-top-app-bar" scroll-behavior="elevate" scroll-target=".app-layout-main">
       <mdui-top-app-bar-title class="app-top-app-bar-title">LYBF</mdui-top-app-bar-title>
       <!-- tabs -->
-      <mdui-tabs value="home">
-        <mdui-tab value="home">
-          <RouterLink to="/">{{ $t("message.home") }}</RouterLink>
-        </mdui-tab>
-        <mdui-tab value="blogs">
-          <RouterLink to="/blogs">{{ $t("message.blogs") }}</RouterLink>
-        </mdui-tab>
-        <mdui-tab value="about">
-          <RouterLink to="/about">{{ $t("message.about") }}</RouterLink>
-        </mdui-tab>
-      </mdui-tabs>
+      <div class="nav-links">
+        <RouterLink to="/" :class="{ 'link-active': route.path === '/' }">{{ $t("message.home") }}</RouterLink>
+        <RouterLink to="/blogs" :class="{ 'link-active': route.path.startsWith('/blogs') }">{{ $t("message.blogs") }}</RouterLink>
+        <RouterLink to="/about" :class="{ 'link-active': route.path === '/about' }">{{ $t("message.about") }}</RouterLink>
+      </div>
 
       <mdui-dropdown>
         <mdui-button slot="trigger" variant="standard">

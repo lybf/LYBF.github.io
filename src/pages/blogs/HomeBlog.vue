@@ -35,7 +35,7 @@ const goto = (blogTitle: string) => {
           >
             <div class="blog-card-inner">
               <div class="blog-card-image">
-                <img src="@/assets/bg2.png" alt="Blog Image" />
+                <img src="@/assets/bg2.jpg" alt="Blog Image" />
               </div>
               <div class="blog-card-content">
                 <h3>{{ blog.title }}</h3>
@@ -64,6 +64,9 @@ article {
   width: 40vw;
   height: auto;
   transform: translateX(50%);
+}
+.title{
+  margin: 4px;
 }
 
 .date {

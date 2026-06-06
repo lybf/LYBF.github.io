@@ -7,7 +7,7 @@
       <article>
         <mdui-card class="about-header-card">
           <img
-            src="../assets/bg2.png"
+            src="../assets/bg2.jpg"
             alt="About Image"
             style="width: 100%; height: auto"
           />
